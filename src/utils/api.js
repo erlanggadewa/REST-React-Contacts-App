@@ -1,11 +1,11 @@
-const BASE_URL = 'https://contact-api.dicoding.dev/v1';
+const BASE_URL = "https://contact-api.dicoding.dev/v1";
 
 function getAccessToken() {
-  return localStorage.getItem('accessToken')
+  return localStorage.getItem("accessToken");
 }
 
 function putAccessToken(accessToken) {
-  return localStorage.setItem('accessToken', accessToken);
+  return localStorage.setItem("accessToken", accessToken);
 }
 
 async function fetchWithToken(url, options = {}) {
@@ -13,23 +13,23 @@ async function fetchWithToken(url, options = {}) {
     ...options,
     headers: {
       ...options.headers,
-      Authorization: `Bearer ${getAccessToken()}`
-    }
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
   });
 }
 
 async function login({ email, password }) {
   const response = await fetch(`${BASE_URL}/login`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
   });
 
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     alert(responseJson.message);
     return { error: true, data: null };
   }
@@ -39,16 +39,16 @@ async function login({ email, password }) {
 
 async function register({ name, email, password }) {
   const response = await fetch(`${BASE_URL}/register`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, email, password}),
+    body: JSON.stringify({ name, email, password }),
   });
 
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     alert(responseJson.message);
     return { error: true };
   }
@@ -60,7 +60,7 @@ async function getUserLogged() {
   const response = await fetchWithToken(`${BASE_URL}/users/me`);
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     return { error: true, data: null };
   }
 
@@ -69,16 +69,16 @@ async function getUserLogged() {
 
 async function addContact({ name, tag }) {
   const response = await fetchWithToken(`${BASE_URL}/contacts`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ name, tag }),
   });
 
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     alert(responseJson.message);
     return { error: true };
   }
@@ -90,7 +90,7 @@ async function getContacts() {
   const response = await fetchWithToken(`${BASE_URL}/contacts`);
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     alert(responseJson.message);
     return { error: true, data: [] };
   }
@@ -100,12 +100,12 @@ async function getContacts() {
 
 async function deleteContact(id) {
   const response = await fetchWithToken(`${BASE_URL}/contacts/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 
   const responseJson = await response.json();
 
-  if (responseJson.status !== 'success') {
+  if (responseJson.status !== "success") {
     alert(responseJson.message);
     return { error: true };
   }
@@ -113,7 +113,7 @@ async function deleteContact(id) {
   return { error: false };
 }
 
-export { 
+export {
   getAccessToken,
   putAccessToken,
   login,
@@ -121,5 +121,5 @@ export {
   getUserLogged,
   addContact,
   getContacts,
-  deleteContact 
-}
+  deleteContact,
+};
